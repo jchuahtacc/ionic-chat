@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import { Content } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 
 // AngularFire
@@ -16,18 +16,38 @@ import { ChatProvider }  from '../../providers/chat/chat';
 })
 export class HomePage {
 
-  messages: FirebaseListObservable<any []>
+  @ViewChild(Content) content: Content;
+  messages: FirebaseListObservable<any []>;
   user: any;
+  ready: boolean = false;
+  newMessage: string = "";
 
   constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public chat: ChatProvider) {
   }
 
   ionViewWillEnter() {
+    if (this.afAuth.auth.currentUser) {
+        this.user = this.afAuth.auth.currentUser;
+        this.chat.sendMessage(this.user.displayName + " came online!");
+        this.messages = this.chat.getMessages();
+        this.messages.subscribe(
+            (event) => {
+                this.scrollToBottom();
+            },
+            (error) => {
+            },
+            () => {
+            }
+        );
+        this.ready = true;
+    } else {
+        this.user = this.afAuth.auth.currentUser;
+    }
     this.afAuth.authState.subscribe(
         (auth) => {
             if (auth != null) {
                 // We are authorized
-                this.messages = this.chat.getMessages();
+                this.user = auth;
             } else {
                 // We are not authorized
                 this.navCtrl.setRoot( LoginPage );
@@ -36,12 +56,13 @@ export class HomePage {
     );
   }
 
-  ionViewDidEnter() {
-    if (this.afAuth.auth.currentUser) {
-        this.user = this.afAuth.auth.currentUser;
-        this.chat.sendMessage(this.user.displayName + " came online!");
-    } else {
-        this.user = this.afAuth.auth.currentUser;
-    }
+  scrollToBottom() {
+    setTimeout(() => { this.content.scrollToBottom(); });
   }
+
+  send() {
+    this.chat.sendMessage(this.newMessage);
+    this.newMessage = "";
+  }
+
 }

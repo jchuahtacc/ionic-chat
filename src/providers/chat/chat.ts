@@ -16,11 +16,11 @@ export class ChatProvider {
   }
 
   getMessages() {
-    if (this.afAuth.auth.currentUser) {
-        return this.afDb.list('/messages/');
-    } else {
-        return null;
+  return this.afDb.list('/messages/', {
+    query: {
+        limitToLast: 30,
     }
+  });
   }
 
   sendMessage(text) {
