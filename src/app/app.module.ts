@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { ChatProvider } from '../providers/chat/chat';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyB8KZQkXRfEjgPnBRCib_ggvJm0bmpCv-g",
@@ -47,7 +48,8 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ChatProvider
   ]
 })
 export class AppModule {}
