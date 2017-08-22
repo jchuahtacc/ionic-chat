@@ -6,8 +6,6 @@ import { LoginPage } from '../login/login';
 // AngularFire
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 import { ChatProvider }  from '../../providers/chat/chat';
 
 @Component({
