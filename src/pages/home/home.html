@@ -15,14 +15,8 @@
   </p>
 
   <ion-list>
-      <ion-item>
+      <ion-item *ngFor="let message of messages | async">
           Placeholder message 1
-      </ion-item>
-      <ion-item>
-          Placeholder message 2
-      </ion-item>
-      <ion-item>
-          Placeholder message 3
       </ion-item>
   </ion-list>
   <button ion-button secondary menuToggle>Toggle Menu</button>
