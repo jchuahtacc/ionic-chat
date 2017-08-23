@@ -16,7 +16,9 @@
 
   <ion-list>
       <ion-item *ngFor="let message of messages | async">
-          Placeholder message 1
+          <h2>
+              {{message.text}}
+          </h2>
       </ion-item>
   </ion-list>
   <button ion-button secondary menuToggle>Toggle Menu</button>
