@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { NgZone } from '@angular/core';
 
 // AngularFire
 import { FirebaseListObservable } from 'angularfire2/database';
@@ -20,14 +21,14 @@ export class HomePage {
   ready: boolean = false;
   newMessage: string = "";
 
-  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public chat: ChatProvider) {
+  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth, public chat: ChatProvider, public zone: NgZone) {
   }
 
   ionViewWillEnter() {
     if (this.afAuth.auth.currentUser) {
         this.user = this.afAuth.auth.currentUser;
         this.chat.sendMessage(this.user.displayName + " came online!");
-        this.messages = this.chat.getMessages();
+        this.zone.run(() => { this.messages = this.chat.getMessages(); });
         this.messages.subscribe(
             (event) => {
                 this.scrollToBottom();
