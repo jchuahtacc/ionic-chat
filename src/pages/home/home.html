@@ -25,9 +25,9 @@
 
 <ion-footer>
     <ion-toolbar>
-        <ion-input type="text" placeholder="Type your message here..."></ion-input>
+        <ion-input type="text" [(ngModel)]="newMessage"  placeholder="Type your message here..."></ion-input>
         <ion-buttons end>
-            <button ion-button>
+            <button ion-button (click)="send()">
                 Send
             </button>
         </ion-buttons>
