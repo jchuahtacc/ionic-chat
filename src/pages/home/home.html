@@ -16,6 +16,9 @@
 
   <ion-list>
       <ion-item *ngFor="let message of messages | async">
+          <ion-avatar item-start>
+            <img src="{{message.photoURL}}" />
+          </ion-avatar>
           <h2>
               {{message.text}}
           </h2>
