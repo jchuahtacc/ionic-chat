@@ -33,8 +33,8 @@
     <ion-toolbar>
         <ion-input type="text" [(ngModel)]="newMessage"  placeholder="Type your message here..."></ion-input>
         <ion-buttons end>
-            <button ion-button (click)="send()">
-                Send
+            <button ion-button (click)="send()" icon-only>
+                <ion-icon name="share-alt"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>
