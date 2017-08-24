@@ -28,7 +28,7 @@ export class HomePage {
     if (this.afAuth.auth.currentUser) {
         this.user = this.afAuth.auth.currentUser;
         this.chat.sendMessage(this.user.displayName + " came online!");
-        this.zone.run(() => { this.messages = this.chat.getMessages(); });
+        this.messages = this.chat.getMessages(); 
         this.messages.subscribe(
             (event) => {
                 this.scrollToBottom();
@@ -38,25 +38,31 @@ export class HomePage {
             () => {
             }
         );
-        this.ready = true;
-    } else {
-        this.user = this.afAuth.auth.currentUser;
-    }
-    this.afAuth.authState.subscribe(
-        (auth) => {
-            if (auth != null) {
-                // We are authorized
-                this.user = auth;
-            } else {
-                // We are not authorized
-                this.navCtrl.setRoot( LoginPage );
+        this.afAuth.authState.subscribe(
+            (auth) => {
+                if (auth != null) {
+                    // We are authorized
+                    this.user = auth;
+                } else {
+                    // We are not authorized
+                    this.navCtrl.setRoot( LoginPage );
+                }
             }
-        }
-    );
+        );
+    } else {
+        this.user = null;
+        this.navCtrl.setRoot( LoginPage );
+    }
+  }
+
+  ionViewDidEnter() {
+    this.ready = true;
   }
 
   scrollToBottom() {
-    setTimeout(() => { this.content.scrollToBottom(); });
+    if (this.ready) {
+        setTimeout(() => { this.content.scrollToBottom(); });
+    }
   }
 
   send() {
